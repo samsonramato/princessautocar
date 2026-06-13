@@ -7,6 +7,11 @@ import { site } from "../data/site.js";
 
 const featured = cars.filter((c) => c.featured).slice(0, 3);
 
+// Hero background slideshow — cycles all 10 photos with a CSS crossfade.
+const slides = Array.from({ length: 10 }, (_, i) => `/assets/slide${i + 1}.jpg`);
+const SLIDE_SECONDS = 4; // time per slide
+const heroDuration = slides.length * SLIDE_SECONDS;
+
 const stats = [
   { value: "10+", label: "Years Experience", icon: "calendar" },
   { value: "5,000+", label: "Cars Repaired", icon: "wrench" },
@@ -40,8 +45,12 @@ const icons = {
 <Layout>
   <!-- Hero -->
   <section class="relative overflow-hidden bg-ink-900 text-white">
-    <div class="absolute inset-0">
-      <img src="/assets/slide1.jpg" alt="" class="h-full w-full object-cover opacity-25" />
+    <div class="absolute inset-0" aria-hidden="true">
+      <div class="hero-slideshow absolute inset-0" style={`--hero-duration:${heroDuration}s`}>
+        {slides.map((src, i) => (
+          <div class="hero-slide" style={`background-image:url('${src}');animation-delay:${i * SLIDE_SECONDS}s`}></div>
+        ))}
+      </div>
       <div class="absolute inset-0 bg-gradient-to-r from-ink-900 via-ink-900/90 to-ink-900/40"></div>
     </div>
     <div class="container-app relative grid items-center gap-10 py-20 lg:grid-cols-2 lg:py-28">
@@ -149,3 +158,30 @@ const icons = {
     </div>
   </section>
 </Layout>
+
+<style>
+  /* Hero background crossfade slideshow (pure CSS, no JS) */
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    animation: heroFade var(--hero-duration, 40s) infinite;
+    will-change: opacity;
+  }
+
+  @keyframes heroFade {
+    0% { opacity: 0; }
+    2.5% { opacity: 1; }
+    10% { opacity: 1; }
+    12.5% { opacity: 0; }
+    100% { opacity: 0; }
+  }
+
+  /* Respect users who prefer no motion: show the first photo, no animation */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-slide { animation: none; }
+    .hero-slide:first-child { opacity: 1; }
+  }
+</style>
