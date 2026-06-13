@@ -22,7 +22,7 @@ const translations = {
         btn_book: "Book an Appointment",
         btn_view_more: "See All Cars",
         btn_services_short: "Services",
-        cta_call: "Call / Book"
+        cta_call: "Call/Book"
     },
     es: {
         nav_home: "Inicio", nav_services: "Servicios", nav_cars: "Autos", nav_about: "Acerca", nav_contact: "Contacto",
