@@ -9,14 +9,14 @@ const featured = cars.filter((c) => c.featured).slice(0, 3);
 
 // Hero background slideshow — cycles all 10 photos with a CSS crossfade.
 const slides = Array.from({ length: 10 }, (_, i) => `/assets/slide${i + 1}.jpg`);
-const SLIDE_SECONDS = 4; // time per slide
+const SLIDE_SECONDS = 4;
 const heroDuration = slides.length * SLIDE_SECONDS;
 
 const stats = [
-  { value: "10+", label: "Years Experience", icon: "calendar" },
-  { value: "5,000+", label: "Cars Repaired", icon: "wrench" },
-  { value: "1,000+", label: "Cars Sold", icon: "car" },
-  { value: "100%", label: "Customer Satisfaction", icon: "star" },
+  { count: 10, suffix: "+", label: "Years Experience", icon: "calendar" },
+  { count: 5000, suffix: "+", label: "Cars Repaired", icon: "wrench" },
+  { count: 1000, suffix: "+", label: "Cars Sold", icon: "car" },
+  { count: 100, suffix: "%", label: "Customer Satisfaction", icon: "star" },
 ];
 
 const reasons = [
@@ -57,20 +57,23 @@ const starPath = "M11.48 3.5a.56.56 0 011.04 0l2.13 5.11a.56.56 0 00.47.35l5.52.
 
 <Layout>
   <!-- Hero -->
-  <section class="relative overflow-hidden bg-ink-900 text-white">
+  <section class="relative overflow-hidden bg-ink-950 text-white">
     <div class="absolute inset-0" aria-hidden="true">
       <div class="hero-slideshow absolute inset-0" style={`--hero-duration:${heroDuration}s`}>
         {slides.map((src, i) => (
           <div class="hero-slide" style={`background-image:url('${src}');animation-delay:${i * SLIDE_SECONDS}s`}></div>
         ))}
       </div>
-      <div class="absolute inset-0 bg-gradient-to-r from-ink-900 via-ink-900/92 to-ink-900/50"></div>
-      <div class="blob h-72 w-72 bg-brand-500" style="top:-4rem;right:6rem"></div>
+      <div class="mesh absolute inset-0 opacity-70"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-ink-950 via-ink-950/90 to-ink-950/40"></div>
+      <div class="bg-grid absolute inset-0 opacity-40"></div>
     </div>
 
     <div class="container-app relative grid items-center gap-12 py-20 lg:grid-cols-[1.1fr_0.9fr] lg:py-28">
-      <div data-reveal>
-        <span class="eyebrow !bg-white/10 !text-brand-200" data-i18n="hero_eyebrow">Family-owned in Austin since 2007</span>
+      <div data-reveal="left">
+        <span class="inline-flex items-center gap-2 rounded-full border border-gold-400/40 bg-gold-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-gold-300" data-i18n="hero_eyebrow">
+          Family-owned in Austin since 2007
+        </span>
         <h1 class="mt-5 text-4xl font-bold leading-[1.05] sm:text-5xl lg:text-6xl">
           <span data-i18n="hero_title">Trusted Auto Repair & Quality Used Cars</span>
         </h1>
@@ -78,7 +81,7 @@ const starPath = "M11.48 3.5a.56.56 0 011.04 0l2.13 5.11a.56.56 0 00.47.35l5.52.
           Honest work, fair prices, and family-like service you can rely on.
         </p>
         <div class="mt-8 flex flex-wrap gap-3">
-          <a href="/services" class="btn-primary" data-i18n="btn_services">Our Services</a>
+          <a href="/services" class="btn-primary pulse-glow" data-i18n="btn_services">Our Services</a>
           <a href="/inventory" class="btn-outline !border-white/30 !bg-white/5 !text-white hover:!border-white" data-i18n="btn_inventory">View Cars</a>
         </div>
         <dl class="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm text-ink-200">
@@ -88,12 +91,12 @@ const starPath = "M11.48 3.5a.56.56 0 011.04 0l2.13 5.11a.56.56 0 00.47.35l5.52.
       </div>
 
       <!-- Floating glass trust card -->
-      <div class="hidden lg:block" data-reveal style="--reveal-delay:150ms">
-        <div class="rounded-3xl border border-white/15 bg-white/10 p-7 shadow-lift backdrop-blur-md">
+      <div class="hidden lg:block" data-reveal="right" style="--reveal-delay:150ms">
+        <div class="animate-float rounded-3xl border border-white/15 bg-white/10 p-7 shadow-lift backdrop-blur-md">
           <div class="flex items-center gap-4">
-            <p class="font-display text-5xl font-bold">5.0</p>
+            <p class="font-display text-5xl font-bold text-gold-300">5.0</p>
             <div>
-              <div class="flex gap-0.5 text-yellow-400">
+              <div class="flex gap-0.5 text-gold-400">
                 {Array.from({ length: 5 }).map(() => (
                   <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d={starPath} /></svg>
                 ))}
@@ -105,7 +108,7 @@ const starPath = "M11.48 3.5a.56.56 0 011.04 0l2.13 5.11a.56.56 0 00.47.35l5.52.
           <ul class="space-y-3">
             {highlights.map((h) => (
               <li class="flex items-center gap-3 text-sm">
-                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-brand-500/20 text-brand-200">
+                <span class="flex h-6 w-6 items-center justify-center rounded-full bg-brand-500/25 text-brand-200">
                   <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d={icons.check} /></svg>
                 </span>
                 {h}
@@ -118,17 +121,20 @@ const starPath = "M11.48 3.5a.56.56 0 011.04 0l2.13 5.11a.56.56 0 00.47.35l5.52.
     </div>
   </section>
 
-  <!-- Impact / stats band (brand gradient) -->
-  <section class="relative overflow-hidden bg-gradient-to-br from-brand-600 to-brand-800 py-16 text-white">
-    <div class="blob h-64 w-64 bg-brand-400" style="bottom:-3rem;left:-2rem;opacity:0.35"></div>
+  <!-- Impact / stats band (animated gradient) -->
+  <section class="relative overflow-hidden py-16 text-white" style="background-image:linear-gradient(120deg,var(--color-brand-600),var(--color-iris-600))">
+    <div class="bg-grid absolute inset-0 opacity-30"></div>
+    <div class="blob h-64 w-64 bg-gold-400 animate-float" style="bottom:-3rem;left:-2rem;opacity:0.25"></div>
     <div class="container-app relative">
       <div class="grid grid-cols-2 gap-8 lg:grid-cols-4">
         {stats.map((s, i) => (
           <div class="text-center" data-reveal style={`--reveal-delay:${i * 90}ms`}>
-            <span class="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-white/15">
+            <span class="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-white/15 backdrop-blur">
               <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d={icons[s.icon]} /></svg>
             </span>
-            <p class="mt-4 font-display text-4xl font-bold">{s.value}</p>
+            <p class="mt-4 font-display text-4xl font-bold sm:text-5xl">
+              <span data-count={s.count} data-suffix={s.suffix}>0{s.suffix}</span>
+            </p>
             <p class="mt-1 text-sm text-brand-100">{s.label}</p>
           </div>
         ))}
@@ -137,7 +143,7 @@ const starPath = "M11.48 3.5a.56.56 0 011.04 0l2.13 5.11a.56.56 0 00.47.35l5.52.
   </section>
 
   <!-- Why choose -->
-  <section class="section bg-dots bg-white">
+  <section class="section bg-dots" style="background-color:var(--color-surface)">
     <div class="container-app">
       <div data-reveal>
         <SectionHeading title="Why Choose Princess Auto Austin" titleKey="why_title"
@@ -157,20 +163,23 @@ const starPath = "M11.48 3.5a.56.56 0 011.04 0l2.13 5.11a.56.56 0 00.47.35l5.52.
     </div>
   </section>
 
-  <!-- How it works -->
-  <section class="section bg-ink-50">
-    <div class="container-app">
-      <div data-reveal>
-        <SectionHeading eyebrow="Simple & transparent" title="How It Works" subtitle="From the first call to driving away — no surprises, no jargon." />
+  <!-- How it works (dark) -->
+  <section class="section relative overflow-hidden bg-ink-900 text-white">
+    <div class="bg-grid absolute inset-0 opacity-30"></div>
+    <div class="blob h-72 w-72 bg-brand-500 animate-float" style="top:2rem;right:-3rem"></div>
+    <div class="blob h-72 w-72 bg-iris-600 animate-float" style="bottom:0;left:-3rem;animation-delay:1.5s"></div>
+    <div class="container-app relative">
+      <div data-reveal class="text-center">
+        <span class="eyebrow !bg-white/10 !text-brand-200">Simple & transparent</span>
+        <h2 class="mt-4 text-3xl font-bold sm:text-4xl">How It Works</h2>
+        <p class="mx-auto mt-3 max-w-2xl text-lg text-ink-200">From the first call to driving away — no surprises, no jargon.</p>
       </div>
-      <div class="relative mt-14 grid gap-8 md:grid-cols-3">
+      <div class="mt-16 grid gap-8 md:grid-cols-3">
         {steps.map((step, i) => (
-          <div class="relative" data-reveal style={`--reveal-delay:${i * 120}ms`}>
-            <div class="card h-full pt-8">
-              <span class="absolute -top-5 left-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 font-display text-lg font-bold text-white shadow-lift">{step.n}</span>
-              <h3 class="mt-3 text-lg font-semibold text-ink-900">{step.title}</h3>
-              <p class="mt-2 text-sm text-ink-500">{step.desc}</p>
-            </div>
+          <div class="relative rounded-2xl border border-white/10 bg-white/5 p-7 pt-10 backdrop-blur transition-all duration-300 hover:-translate-y-2 hover:border-brand-400/50" data-reveal style={`--reveal-delay:${i * 130}ms`}>
+            <span class="absolute -top-6 left-6 flex h-14 w-14 items-center justify-center rounded-2xl font-display text-xl font-bold text-white shadow-glow" style="background-image:linear-gradient(135deg,var(--color-brand-500),var(--color-iris-600))">{step.n}</span>
+            <h3 class="mt-3 text-lg font-semibold">{step.title}</h3>
+            <p class="mt-2 text-sm text-ink-200">{step.desc}</p>
           </div>
         ))}
       </div>
@@ -196,7 +205,7 @@ const starPath = "M11.48 3.5a.56.56 0 011.04 0l2.13 5.11a.56.56 0 00.47.35l5.52.
           </div>
         </>
       ) : (
-        <div class="mx-auto mt-10 max-w-xl rounded-3xl border border-ink-100 bg-ink-50 px-8 py-12 text-center">
+        <div class="mx-auto mt-10 max-w-xl rounded-3xl border border-ink-100 bg-surface px-8 py-12 text-center" style="background-color:var(--color-surface)">
           <p class="text-lg text-ink-700">Our inventory changes often — call us for current availability.</p>
           <div class="mt-6 flex flex-wrap justify-center gap-3">
             <a href={site.phoneHref} class="btn-primary">Call {site.phonePrimary}</a>
@@ -207,13 +216,15 @@ const starPath = "M11.48 3.5a.56.56 0 011.04 0l2.13 5.11a.56.56 0 00.47.35l5.52.
     </div>
   </section>
 
-  <!-- Brands we service -->
-  <section class="border-y border-ink-100 bg-ink-50 py-12">
+  <!-- Brands marquee -->
+  <section class="overflow-hidden border-y border-ink-100 py-12" style="background-color:var(--color-surface)">
     <div class="container-app" data-reveal>
       <p class="text-center text-sm font-semibold uppercase tracking-wide text-ink-500">All makes & models — we service them all</p>
-      <div class="mt-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-        {brands.map((b) => (
-          <span class="font-display text-lg font-semibold text-ink-200 transition-colors hover:text-brand-600">{b}</span>
+    </div>
+    <div class="relative mt-6">
+      <div class="marquee gap-12">
+        {[...brands, ...brands].map((b) => (
+          <span class="whitespace-nowrap font-display text-2xl font-bold text-ink-200 transition-colors hover:text-brand-600">{b}</span>
         ))}
       </div>
     </div>
@@ -228,16 +239,16 @@ const starPath = "M11.48 3.5a.56.56 0 011.04 0l2.13 5.11a.56.56 0 00.47.35l5.52.
       </div>
       <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {reviews.map((rev, i) => (
-          <figure class="card card-hover relative flex flex-col" data-reveal style={`--reveal-delay:${i * 100}ms`}>
-            <span class="absolute right-6 top-4 font-display text-6xl leading-none text-brand-100">&rdquo;</span>
-            <div class="flex gap-0.5 text-yellow-400">
+          <figure class="card card-hover card-accent relative flex flex-col" data-reveal style={`--reveal-delay:${i * 100}ms`}>
+            <span class="absolute right-6 top-2 font-display text-7xl leading-none text-brand-100">&rdquo;</span>
+            <div class="flex gap-0.5 text-gold-400">
               {Array.from({ length: rev.rating }).map(() => (
                 <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d={starPath} /></svg>
               ))}
             </div>
             <blockquote class="mt-4 flex-1 text-ink-700">"{rev.text}"</blockquote>
             <figcaption class="mt-5 flex items-center gap-3">
-              <span class="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-brand-700 text-sm font-bold text-white">
+              <span class="flex h-11 w-11 items-center justify-center rounded-full text-sm font-bold text-white" style="background-image:linear-gradient(135deg,var(--color-brand-500),var(--color-iris-600))">
                 {rev.name.charAt(0)}
               </span>
               <span class="font-semibold text-ink-900">{rev.name}</span>
@@ -254,8 +265,9 @@ const starPath = "M11.48 3.5a.56.56 0 011.04 0l2.13 5.11a.56.56 0 00.47.35l5.52.
   <!-- CTA -->
   <section class="section bg-white">
     <div class="container-app">
-      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-ink-900 to-brand-900 px-8 py-16 text-center text-white sm:px-16" data-reveal>
-        <div class="blob h-64 w-64 bg-brand-500" style="top:-3rem;right:-2rem;opacity:0.4"></div>
+      <div class="relative overflow-hidden rounded-3xl bg-ink-950 px-8 py-16 text-center text-white sm:px-16" data-reveal="zoom">
+        <div class="mesh absolute inset-0 opacity-80"></div>
+        <div class="bg-grid absolute inset-0 opacity-30"></div>
         <div class="relative">
           <h2 class="text-3xl font-bold sm:text-4xl" data-i18n="cta_title">Need Auto Repair Today?</h2>
           <p class="mx-auto mt-3 max-w-xl text-lg text-ink-200" data-i18n="cta_sub">We'll take care of your vehicle like it's our own.</p>
@@ -289,7 +301,6 @@ const starPath = "M11.48 3.5a.56.56 0 011.04 0l2.13 5.11a.56.56 0 00.47.35l5.52.
     100% { opacity: 0; }
   }
 
-  /* Respect users who prefer no motion: show the first photo, no animation */
   @media (prefers-reduced-motion: reduce) {
     .hero-slide { animation: none; }
     .hero-slide:first-child { opacity: 1; }

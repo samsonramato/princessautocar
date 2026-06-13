@@ -1,28 +1,42 @@
 @import "tailwindcss";
 
-/* ===== Design tokens — modern & clean automotive theme ===== */
+/* ===== Design tokens — rich, bold automotive theme ===== */
 @theme {
-  /* Brand palette */
-  --color-brand-50: #eef5ff;
-  --color-brand-100: #d9e8ff;
-  --color-brand-200: #bcd7ff;
-  --color-brand-300: #8ebdff;
-  --color-brand-400: #5897ff;
-  --color-brand-500: #2f6df6;
-  --color-brand-600: #1a50e0;
-  --color-brand-700: #163fb8;
-  --color-brand-800: #183891;
-  --color-brand-900: #193473;
+  /* Brand blue */
+  --color-brand-50: #eef4ff;
+  --color-brand-100: #d9e6ff;
+  --color-brand-200: #bcd2ff;
+  --color-brand-300: #8eb0ff;
+  --color-brand-400: #5884ff;
+  --color-brand-500: #3b61f6;
+  --color-brand-600: #2546e0;
+  --color-brand-700: #1d37b8;
+  --color-brand-800: #1d3291;
+  --color-brand-900: #1b2c73;
 
-  /* Neutral ink */
-  --color-ink-50: #f7f8fa;
-  --color-ink-100: #eef0f4;
-  --color-ink-200: #dce0e8;
-  --color-ink-500: #5b6472;
-  --color-ink-700: #2b313c;
-  --color-ink-900: #131720;
+  /* Violet (gradient partner) */
+  --color-iris-400: #a78bfa;
+  --color-iris-500: #8b5cf6;
+  --color-iris-600: #7c3aed;
+  --color-iris-700: #6d28d9;
 
-  --color-accent: #16a34a; /* trust green for stats / success */
+  /* Gold accent */
+  --color-gold-300: #fcd34d;
+  --color-gold-400: #fbbf24;
+  --color-gold-500: #f59e0b;
+
+  /* Neutral ink (deep navy darks) */
+  --color-ink-50: #f6f8fc;
+  --color-ink-100: #eceff6;
+  --color-ink-200: #d7dce8;
+  --color-ink-500: #5b6478;
+  --color-ink-700: #283045;
+  --color-ink-800: #161c2d;
+  --color-ink-900: #0e1322;
+  --color-ink-950: #070a14;
+
+  /* Soft tinted surface (instead of pure white) */
+  --color-surface: #eef2fb;
 
   /* Typography */
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -31,8 +45,9 @@
   /* Radius & shadow */
   --radius-xl: 1rem;
   --radius-2xl: 1.25rem;
-  --shadow-soft: 0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px rgba(16, 24, 40, 0.06);
-  --shadow-lift: 0 12px 32px rgba(16, 24, 40, 0.12);
+  --shadow-soft: 0 1px 2px rgba(13, 19, 34, 0.05), 0 10px 30px rgba(13, 19, 34, 0.08);
+  --shadow-lift: 0 18px 45px rgba(13, 19, 34, 0.16);
+  --shadow-glow: 0 12px 40px rgba(59, 97, 246, 0.45);
 }
 
 html {
@@ -51,6 +66,11 @@ h1, h2, h3, h4 {
   letter-spacing: -0.02em;
 }
 
+::selection {
+  background: var(--color-brand-500);
+  color: #fff;
+}
+
 /* Reusable component classes */
 @layer components {
   .container-app {
@@ -58,26 +78,32 @@ h1, h2, h3, h4 {
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2;
   }
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2 bg-brand-600 text-white shadow-soft hover:bg-brand-700 hover:shadow-lift hover:-translate-y-0.5;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2 text-white;
+    background-image: linear-gradient(120deg, var(--color-brand-500), var(--color-iris-600));
+    box-shadow: var(--shadow-soft);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
   }
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2 border border-ink-200 bg-white text-ink-900 hover:border-brand-400 hover:text-brand-700;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2 border border-ink-200 bg-white text-ink-900 hover:-translate-y-0.5 hover:border-brand-400 hover:text-brand-700;
   }
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2 text-ink-700 hover:bg-ink-100;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2 text-ink-700 hover:bg-ink-100;
   }
   .btn-sm {
     @apply px-4 py-2 text-sm;
   }
 
   .card {
-    @apply rounded-2xl border border-ink-100 bg-white p-6 shadow-soft transition-all duration-200;
+    @apply rounded-2xl border border-ink-100 bg-white p-6 shadow-soft transition-all duration-300;
   }
   .card-hover {
-    @apply hover:-translate-y-1 hover:shadow-lift hover:border-brand-200;
+    @apply hover:-translate-y-2 hover:shadow-lift hover:border-brand-200;
   }
 
   .eyebrow {
@@ -92,9 +118,14 @@ h1, h2, h3, h4 {
     @apply w-full rounded-xl border border-ink-200 bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-ink-500 focus:border-brand-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400;
   }
 
-  /* Gradient text for accent words */
+  /* Animated gradient text */
   .text-gradient {
-    @apply bg-gradient-to-r from-brand-500 to-brand-700 bg-clip-text text-transparent;
+    background-image: linear-gradient(120deg, var(--color-brand-500), var(--color-iris-500), var(--color-brand-400));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientShift 6s ease infinite;
   }
 
   /* Card with a colored top accent that reveals on hover */
@@ -107,10 +138,10 @@ h1, h2, h3, h4 {
     inset-inline: 0;
     top: 0;
     height: 4px;
-    background: linear-gradient(90deg, var(--color-brand-400), var(--color-brand-600));
+    background: linear-gradient(90deg, var(--color-brand-400), var(--color-iris-500));
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.3s ease;
+    transition: transform 0.4s ease;
   }
   .card-accent:hover::before {
     transform: scaleX(1);
@@ -118,7 +149,9 @@ h1, h2, h3, h4 {
 
   /* Gradient icon tile */
   .icon-tile {
-    @apply flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-soft;
+    @apply flex h-12 w-12 items-center justify-center rounded-xl text-white;
+    background-image: linear-gradient(135deg, var(--color-brand-500), var(--color-iris-600));
+    box-shadow: 0 8px 20px rgba(59, 97, 246, 0.35);
   }
 }
 
@@ -126,33 +159,94 @@ h1, h2, h3, h4 {
 .blob {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(72px);
-  opacity: 0.5;
+  filter: blur(80px);
+  opacity: 0.55;
   pointer-events: none;
   z-index: 0;
 }
 
-/* ===== Subtle dotted background pattern ===== */
+/* ===== Background patterns ===== */
 .bg-dots {
   background-image: radial-gradient(var(--color-ink-200) 1px, transparent 1px);
   background-size: 22px 22px;
 }
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
 
-/* ===== Scroll-reveal animation ===== */
+/* Animated gradient mesh background (for dark hero) */
+.mesh {
+  background:
+    radial-gradient(40% 50% at 20% 20%, rgba(59, 97, 246, 0.55), transparent 60%),
+    radial-gradient(35% 45% at 85% 25%, rgba(124, 58, 237, 0.5), transparent 60%),
+    radial-gradient(45% 55% at 60% 90%, rgba(37, 70, 224, 0.45), transparent 60%);
+  background-size: 180% 180%;
+  animation: meshMove 16s ease-in-out infinite;
+}
+
+/* ===== Keyframes ===== */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+}
+@keyframes meshMove {
+  0%, 100% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(59, 97, 246, 0.5); }
+  50% { box-shadow: 0 0 0 14px rgba(59, 97, 246, 0); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-float { animation: float 7s ease-in-out infinite; }
+.pulse-glow { animation: pulseGlow 2.4s ease-out infinite; }
+
+/* Marquee strip */
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+.marquee:hover { animation-play-state: paused; }
+
+/* ===== Scroll-reveal animation (bolder) ===== */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(42px) scale(0.97);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   transition-delay: var(--reveal-delay, 0ms);
 }
+[data-reveal="left"] { transform: translateX(-48px); }
+[data-reveal="right"] { transform: translateX(48px); }
+[data-reveal="zoom"] { transform: scale(0.85); }
 [data-reveal].is-visible {
   opacity: 1;
   transform: none;
 }
+
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal] {
-    opacity: 1;
-    transform: none;
-    transition: none;
+  [data-reveal],
+  .animate-float,
+  .pulse-glow,
+  .marquee,
+  .mesh,
+  .text-gradient {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
