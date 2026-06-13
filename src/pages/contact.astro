@@ -17,7 +17,7 @@ const details = [
   <section class="section">
     <div class="container-app grid gap-10 lg:grid-cols-2">
       <!-- Form -->
-      <div class="card">
+      <div class="card card-accent" data-reveal>
         <h2 class="text-xl font-semibold text-ink-900">Get in touch</h2>
         <p class="mt-1 text-sm text-ink-500">We usually reply the same business day.</p>
 
@@ -47,9 +47,9 @@ const details = [
 
       <!-- Details -->
       <div class="space-y-4">
-        {details.map((d) => (
-          <div class="card flex gap-4">
-            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
+        {details.map((d, i) => (
+          <div class="card card-hover flex gap-4" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+            <span class="icon-tile shrink-0">
               <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d={d.icon} /></svg>
             </span>
             <div>

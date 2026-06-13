@@ -61,6 +61,26 @@ const fullTitle = title === site.name ? `${site.name} — Auto Repair & Used Car
         });
       }
       if (saved !== "en") applyLang(saved);
+
+      // Scroll-reveal: fade elements up as they enter the viewport
+      const revealEls = document.querySelectorAll("[data-reveal]");
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce || !("IntersectionObserver" in window)) {
+        revealEls.forEach((el) => el.classList.add("is-visible"));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+        );
+        revealEls.forEach((el) => io.observe(el));
+      }
     </script>
   </body>
 </html>
