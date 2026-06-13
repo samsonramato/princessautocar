@@ -1,0 +1,98 @@
+---
+import { site } from "../data/site.js";
+import { languages } from "../data/translations.js";
+
+const nav = [
+  { href: "/", key: "nav_home", label: "Home" },
+  { href: "/services", key: "nav_services", label: "Services" },
+  { href: "/inventory", key: "nav_cars", label: "Cars" },
+  { href: "/about", key: "nav_about", label: "About" },
+  { href: "/contact", key: "nav_contact", label: "Contact" },
+];
+
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isActive = (href) => (href === "/" ? path === "/" : path.startsWith(href));
+---
+
+<header class="sticky top-0 z-50 border-b border-ink-100 bg-white/80 backdrop-blur-md">
+  <div class="container-app flex h-18 items-center justify-between gap-4 py-3">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-3">
+      <img src="/assets/logo.png" alt={`${site.name} logo`} class="h-11 w-11 rounded-lg object-contain" />
+      <span class="leading-tight">
+        <span class="block font-display text-base font-semibold text-ink-900 sm:text-lg">{site.name}</span>
+        <span class="block text-xs text-ink-500">{site.tagline}</span>
+      </span>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden items-center gap-1 lg:flex">
+      {nav.map((item) => (
+        <a
+          href={item.href}
+          data-i18n={item.key}
+          class:list={[
+            "rounded-full px-4 py-2 text-sm font-medium transition-colors",
+            isActive(item.href)
+              ? "bg-brand-50 text-brand-700"
+              : "text-ink-700 hover:bg-ink-100 hover:text-ink-900",
+          ]}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Controls -->
+    <div class="flex items-center gap-2">
+      <select
+        id="langSwitcher"
+        aria-label="Language switcher"
+        class="rounded-full border border-ink-200 bg-white px-3 py-2 text-sm font-medium text-ink-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
+      >
+        {languages.map((l) => <option value={l.code}>{l.label}</option>)}
+      </select>
+
+      <a href="/contact" data-i18n="cta_call" class="btn-primary btn-sm hidden sm:inline-flex">Call / Book</a>
+
+      <button
+        id="navToggle"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        class="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink-700 hover:bg-ink-100 lg:hidden"
+      >
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile nav -->
+  <nav id="mobileNav" class="hidden border-t border-ink-100 bg-white lg:hidden">
+    <div class="container-app flex flex-col gap-1 py-3">
+      {nav.map((item) => (
+        <a
+          href={item.href}
+          data-i18n={item.key}
+          class:list={[
+            "rounded-lg px-4 py-3 text-sm font-medium",
+            isActive(item.href) ? "bg-brand-50 text-brand-700" : "text-ink-700 hover:bg-ink-100",
+          ]}
+        >
+          {item.label}
+        </a>
+      ))}
+      <a href="/contact" data-i18n="cta_call" class="btn-primary mt-2">Call / Book</a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById("navToggle");
+  const mobileNav = document.getElementById("mobileNav");
+  toggle?.addEventListener("click", () => {
+    const open = mobileNav?.classList.toggle("hidden") === false;
+    toggle.setAttribute("aria-expanded", String(open));
+  });
+</script>

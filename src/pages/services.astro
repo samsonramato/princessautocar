@@ -1,0 +1,43 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/PageHero.astro";
+
+const services = [
+  { title: "General Repair", desc: "Engine, transmission, electrical and more — diagnosed and fixed right the first time." },
+  { title: "Used Car Sales", desc: "Inspected, cleaned, and ready-to-drive pre-owned vehicles at fair prices." },
+  { title: "Body Shop", desc: "Comprehensive body repair, from minor dents to major collision damage." },
+  { title: "Hail Damage", desc: "Complete hail damage assessment and paintless dent repair services." },
+  { title: "Brakes & Suspension", desc: "Full brake service, wheel alignment, and suspension repair." },
+  { title: "Oil & Maintenance", desc: "Oil changes, filters, fluid checks, and scheduled maintenance plans." },
+  { title: "Diagnostics", desc: "Computer diagnostics and check-engine light troubleshooting." },
+  { title: "AC & Heating", desc: "Climate control repair, recharge, and heating system service." },
+];
+
+const icon = "M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75 3.75 2.25 7.5 4.5v1.409l4.26 4.26";
+---
+
+<Layout title="Services" description="Full service auto repair, diagnostics, maintenance, body shop and used car sales in Austin, TX.">
+  <PageHero title="Our Services" subtitle="Full-service auto repair, diagnostics, maintenance, and quality used cars — all under one roof." />
+
+  <section class="section">
+    <div class="container-app">
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {services.map((s) => (
+          <div class="card card-hover">
+            <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d={icon} /></svg>
+            </span>
+            <h3 class="mt-4 text-lg font-semibold text-ink-900">{s.title}</h3>
+            <p class="mt-2 text-sm text-ink-500">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-14 rounded-3xl bg-brand-600 px-8 py-12 text-center text-white">
+        <h2 class="text-2xl font-bold sm:text-3xl">Ready to get your car serviced?</h2>
+        <p class="mt-2 text-brand-100">Book an appointment and we'll take it from there.</p>
+        <a href="/contact" class="btn mt-6 bg-white text-brand-700 hover:bg-brand-50" data-i18n="btn_book">Book a Service</a>
+      </div>
+    </div>
+  </section>
+</Layout>

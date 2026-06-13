@@ -1,0 +1,66 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { site } from "../data/site.js";
+
+const {
+  title = site.name,
+  description = "Princess Auto Austin — trusted auto repair & quality used cars in Austin. Honest pricing, skilled technicians, family-owned service.",
+} = Astro.props;
+
+const fullTitle = title === site.name ? `${site.name} — Auto Repair & Used Cars in Austin` : `${title} — ${site.name}`;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href="/assets/logo.png" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="min-h-screen bg-white text-ink-900">
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      import { translations } from "../data/translations.js";
+
+      function applyLang(lang) {
+        const dict = translations[lang] || translations.en;
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          if (dict[key]) el.textContent = dict[key];
+        });
+        document.documentElement.setAttribute("lang", lang);
+      }
+
+      const saved = localStorage.getItem("lang") || "en";
+      const select = document.getElementById("langSwitcher");
+      if (select) {
+        select.value = saved;
+        select.addEventListener("change", () => {
+          localStorage.setItem("lang", select.value);
+          applyLang(select.value);
+        });
+      }
+      if (saved !== "en") applyLang(saved);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/PageHero.astro";
+
+const team = [
+  { name: "Jimmy", role: "Lead Technician", img: "/assets/slide7.jpg" },
+  { name: "Sewenet", role: "Service Manager", img: "/assets/slide8.jpg" },
+  { name: "Owner", role: "Founder", img: "/assets/slide9.jpg" },
+];
+
+const values = [
+  { title: "Honesty First", desc: "We tell you what your car actually needs — never more." },
+  { title: "Fair Pricing", desc: "Transparent quotes with no surprises at pickup." },
+  { title: "Quality Work", desc: "Skilled technicians and a service guarantee on every repair." },
+];
+---
+
+<Layout title="About" description="Princess Auto Austin is a family-owned auto repair and used-car business serving Austin since 2007.">
+  <PageHero title="About Us" subtitle="A family-owned auto repair and used-car business serving Austin with honesty and care since 2007." />
+
+  <section class="section">
+    <div class="container-app grid items-center gap-12 lg:grid-cols-2">
+      <div>
+        <span class="eyebrow">Our Story</span>
+        <h2 class="mt-4 text-3xl font-bold text-ink-900">Built on trust, one customer at a time</h2>
+        <p class="mt-4 text-ink-500">
+          Since 2007, Princess Auto Austin has been the neighborhood shop drivers turn to for honest repairs
+          and dependable used cars. What started as a small family operation has grown into a trusted name on
+          North Lamar — but our values haven't changed.
+        </p>
+        <p class="mt-4 text-ink-500">
+          We treat every vehicle like it's our own and every customer like family. That's why so many of our
+          customers come back, and bring their friends and family with them.
+        </p>
+      </div>
+      <div class="overflow-hidden rounded-3xl shadow-soft">
+        <img src="/assets/slide2.jpg" alt="Inside Princess Auto Austin" class="h-full w-full object-cover" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-ink-50">
+    <div class="container-app">
+      <div class="grid gap-5 sm:grid-cols-3">
+        {values.map((v) => (
+          <div class="card">
+            <h3 class="text-lg font-semibold text-ink-900">{v.title}</h3>
+            <p class="mt-2 text-sm text-ink-500">{v.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-app">
+      <h2 class="text-center text-3xl font-bold text-ink-900">Our Team</h2>
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {team.map((m) => (
+          <div class="card card-hover overflow-hidden p-0 text-center">
+            <div class="aspect-[4/3] overflow-hidden">
+              <img src={m.img} alt={m.name} loading="lazy" class="h-full w-full object-cover" />
+            </div>
+            <div class="p-5">
+              <h3 class="text-lg font-semibold text-ink-900">{m.name}</h3>
+              <p class="mt-1 text-sm text-brand-600">{m.role}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

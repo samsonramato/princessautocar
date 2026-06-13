@@ -1,0 +1,54 @@
+---
+import { site, mapsUrl } from "../data/site.js";
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-ink-100 bg-ink-50">
+  <div class="container-app grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="sm:col-span-2 lg:col-span-1">
+      <div class="flex items-center gap-3">
+        <img src="/assets/logo.png" alt={`${site.name} logo`} class="h-10 w-10 rounded-lg object-contain" />
+        <span class="font-display text-lg font-semibold text-ink-900">{site.name}</span>
+      </div>
+      <p class="mt-4 max-w-xs text-sm text-ink-500">
+        Family-owned auto repair & used-car sales serving Austin with honesty and care since 2007.
+      </p>
+    </div>
+
+    <div>
+      <h4 class="text-sm font-semibold text-ink-900">Quick Links</h4>
+      <ul class="mt-4 space-y-2 text-sm">
+        <li><a href="/services" class="text-ink-500 hover:text-brand-700">Services</a></li>
+        <li><a href="/inventory" class="text-ink-500 hover:text-brand-700">Inventory</a></li>
+        <li><a href="/about" class="text-ink-500 hover:text-brand-700">About</a></li>
+        <li><a href="/contact" class="text-ink-500 hover:text-brand-700">Contact</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-sm font-semibold text-ink-900">Contact</h4>
+      <ul class="mt-4 space-y-2 text-sm text-ink-500">
+        <li><a href={mapsUrl} target="_blank" rel="noopener" class="hover:text-brand-700">{site.address}</a></li>
+        <li><a href={site.phoneHref} class="hover:text-brand-700">{site.phonePrimary}</a></li>
+        <li><a href={`mailto:${site.email}`} class="hover:text-brand-700">{site.email}</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-sm font-semibold text-ink-900">Hours</h4>
+      <ul class="mt-4 space-y-2 text-sm text-ink-500">
+        {site.hours.map((h) => (
+          <li class="flex justify-between gap-3">
+            <span>{h.day}</span><span class="text-ink-900">{h.time}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-ink-100">
+    <div class="container-app py-5 text-center text-xs text-ink-500">
+      © {year} {site.name} — All rights reserved.
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,47 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/PageHero.astro";
+import CarCard from "../components/CarCard.astro";
+import { cars } from "../data/cars.js";
+---
+
+<Layout title="Inventory" description="Browse quality, inspected used cars for sale at Princess Auto Austin.">
+  <PageHero title="Inventory" subtitle="Browse our available vehicles — every car is inspected and reconditioned before sale." />
+
+  <section class="section">
+    <div class="container-app">
+      <div class="mx-auto mb-10 max-w-md">
+        <div class="relative">
+          <svg class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Search make, model, year or price…"
+            class="w-full rounded-full border border-ink-200 bg-white py-3 pl-11 pr-4 text-sm focus:border-brand-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
+          />
+        </div>
+      </div>
+
+      <div id="inventoryList" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {cars.map((car) => <CarCard car={car} />)}
+      </div>
+      <p id="noResults" class="hidden py-10 text-center text-ink-500">No vehicles match your search.</p>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const input = document.getElementById("searchInput");
+  const list = document.getElementById("inventoryList");
+  const noResults = document.getElementById("noResults");
+  input?.addEventListener("input", () => {
+    const q = input.value.trim().toLowerCase();
+    let visible = 0;
+    list?.querySelectorAll("article").forEach((card) => {
+      const match = card.textContent.toLowerCase().includes(q);
+      card.classList.toggle("hidden", !match);
+      if (match) visible++;
+    });
+    noResults?.classList.toggle("hidden", visible > 0);
+  });
+</script>
