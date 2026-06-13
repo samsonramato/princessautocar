@@ -117,12 +117,24 @@ const icons = {
     <div class="container-app">
       <SectionHeading title="Featured Cars" titleKey="featured_title"
         subtitle="Hand-picked, inspected, and ready to drive." subtitleKey="featured_sub" />
-      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {featured.map((car) => <CarCard car={car} />)}
-      </div>
-      <div class="mt-10 text-center">
-        <a href="/inventory" class="btn-outline" data-i18n="btn_view_more">See All Cars</a>
-      </div>
+      {featured.length > 0 ? (
+        <>
+          <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {featured.map((car) => <CarCard car={car} />)}
+          </div>
+          <div class="mt-10 text-center">
+            <a href="/inventory" class="btn-outline" data-i18n="btn_view_more">See All Cars</a>
+          </div>
+        </>
+      ) : (
+        <div class="mx-auto mt-10 max-w-xl rounded-3xl border border-ink-100 bg-ink-50 px-8 py-12 text-center">
+          <p class="text-lg text-ink-700">Our inventory changes often — call us for current availability.</p>
+          <div class="mt-6 flex flex-wrap justify-center gap-3">
+            <a href={site.phoneHref} class="btn-primary">Call {site.phonePrimary}</a>
+            <a href="/contact" class="btn-outline">Send a Message</a>
+          </div>
+        </div>
+      )}
     </div>
   </section>
 

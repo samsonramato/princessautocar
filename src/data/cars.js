@@ -1,73 +1,23 @@
-// Inventory data. Replace with your real listings (or wire to a CMS/API later).
-// `featured: true` surfaces the car on the homepage.
-export const cars = [
-  {
-    id: 1,
-    title: "2012 Honda Civic LX",
-    year: 2012,
-    make: "Honda",
-    price: 7900,
-    mileage: "120,000 mi",
-    img: "/assets/slide1.jpg",
-    desc: "Well-maintained, single owner. Clean title and recent service.",
-    featured: true,
-  },
-  {
-    id: 2,
-    title: "2014 Toyota Corolla",
-    year: 2014,
-    make: "Toyota",
-    price: 8500,
-    mileage: "110,500 mi",
-    img: "/assets/slide2.jpg",
-    desc: "Reliable commuter, recent inspection and new tires.",
-    featured: true,
-  },
-  {
-    id: 3,
-    title: "2016 Subaru Outback",
-    year: 2016,
-    make: "Subaru",
-    price: 12400,
-    mileage: "135,000 mi",
-    img: "/assets/slide3.jpg",
-    desc: "AWD, great for Texas weather. Roomy and dependable.",
-    featured: true,
-  },
-  {
-    id: 4,
-    title: "2015 Nissan Altima",
-    year: 2015,
-    make: "Nissan",
-    price: 9200,
-    mileage: "98,000 mi",
-    img: "/assets/slide4.jpg",
-    desc: "Smooth ride, excellent fuel economy, well cared for.",
-    featured: false,
-  },
-  {
-    id: 5,
-    title: "2013 Ford Escape SE",
-    year: 2013,
-    make: "Ford",
-    price: 8900,
-    mileage: "128,000 mi",
-    img: "/assets/slide5.jpg",
-    desc: "Versatile SUV with plenty of cargo space.",
-    featured: false,
-  },
-  {
-    id: 6,
-    title: "2017 Hyundai Elantra",
-    year: 2017,
-    make: "Hyundai",
-    price: 10500,
-    mileage: "85,000 mi",
-    img: "/assets/slide6.jpg",
-    desc: "Low mileage, modern features, remaining warranty.",
-    featured: false,
-  },
-];
+// ─────────────────────────────────────────────────────────────
+// INVENTORY
+// Add your real cars here. Each car looks like this:
+//
+//   {
+//     id: 1,
+//     title: "2018 Toyota Camry SE",
+//     year: 2018,
+//     make: "Toyota",
+//     price: 15900,            // number, no $ — formatted automatically
+//     mileage: "78,000 mi",
+//     img: "/assets/your-photo.jpg",  // put the photo in public/assets/
+//     desc: "One owner, clean title, recently serviced.",
+//     featured: true,          // true = also show on the home page
+//   },
+//
+// While this list is empty, the site shows an honest
+// "call for current availability" message instead of fake cars.
+// ─────────────────────────────────────────────────────────────
+export const cars = [];
 
 export const formatPrice = (n) =>
   n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
