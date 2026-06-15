@@ -7,8 +7,11 @@ import { site, reviewUrl } from "../data/site.js";
 
 const featured = cars.filter((c) => c.featured).slice(0, 3);
 
-// Hero background slideshow — cycles all 10 photos with a CSS crossfade.
-const slides = Array.from({ length: 10 }, (_, i) => `/assets/slide${i + 1}.jpg`);
+// Hero background slideshow — cycles every real photo with a CSS crossfade.
+const slides = [
+  ...Array.from({ length: 3 }, (_, i) => `/assets/slide${i + 1}.jpg`),
+  ...Array.from({ length: 10 }, (_, i) => `/assets/gallery${i + 1}.png`),
+];
 const SLIDE_SECONDS = 4;
 const heroDuration = slides.length * SLIDE_SECONDS;
 
