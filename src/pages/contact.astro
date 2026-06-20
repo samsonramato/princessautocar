@@ -11,7 +11,7 @@ const details = [
 ];
 ---
 
-<Layout title="Contact" description="Contact Princess Auto Austin — schedule a service, ask a question, or find us on North Lamar Blvd.">
+<Layout title="Contact & Directions in Austin" description="Contact Princess Auto Austin to book auto repair, get a body shop estimate, or ask about a used car. Find us at 11114 N Lamar Blvd, Ste C, Austin, TX 78753.">
   <PageHero title="Contact Us" subtitle="Have a question or need to schedule a service? Send us a message or reach out directly." />
 
   <section class="section">
@@ -22,8 +22,10 @@ const details = [
         <p class="mt-1 text-sm text-ink-500">We usually reply the same business day.</p>
 
         <form
+          id="contactForm"
           name="contact"
           method="POST"
+          enctype="multipart/form-data"
           data-netlify="true"
           netlify-honeypot="bot-field"
           class="mt-6 space-y-4"
@@ -37,6 +39,22 @@ const details = [
           </div>
           <input name="phone" placeholder="Phone (optional)" class="form-input" />
           <textarea name="message" rows="5" required placeholder="How can we help?" class="form-input resize-none"></textarea>
+
+          <label class="block">
+            <span class="text-sm font-medium text-ink-700">Add photos (optional) — e.g. of car damage or a part</span>
+            <input
+              id="photoInput"
+              name="photos"
+              type="file"
+              accept="image/png,image/jpeg,image/webp,image/gif"
+              multiple
+              class="mt-1 block w-full text-sm text-ink-500 file:mr-4 file:rounded-full file:border-0 file:bg-brand-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-brand-700 hover:file:bg-brand-100"
+            />
+            <span class="mt-1 block text-xs text-ink-400">JPG, PNG, WebP or GIF · up to 5 photos · 10 MB each</span>
+          </label>
+
+          <p id="photoError" class="hidden rounded-lg bg-red-50 px-3 py-2 text-sm font-medium text-red-700"></p>
+
           <button type="submit" class="btn-primary w-full sm:w-auto">Send Message</button>
         </form>
 
@@ -80,4 +98,77 @@ const details = [
       </div>
     </div>
   </section>
+
+  <script>
+    // Photo upload guard: verify each file is genuinely a raster image by
+    // reading its binary signature (magic bytes) — not trusting the filename
+    // or the browser-reported type, both of which an attacker can spoof.
+    // SVG is intentionally rejected because it can carry embedded scripts.
+    const form = document.getElementById("contactForm");
+    const input = /** @type {HTMLInputElement} */ (document.getElementById("photoInput"));
+    const errorBox = document.getElementById("photoError");
+    const MAX_FILES = 5;
+    const MAX_BYTES = 10 * 1024 * 1024; // 10 MB each
+
+    const showError = (msg) => {
+      if (!errorBox) return;
+      errorBox.textContent = msg;
+      errorBox.classList.remove("hidden");
+    };
+    const clearError = () => errorBox?.classList.add("hidden");
+
+    // Returns true only if the first bytes match a known image signature.
+    const isRealImage = async (file) => {
+      const buf = new Uint8Array(await file.slice(0, 12).arrayBuffer());
+      const hex = [...buf].map((b) => b.toString(16).padStart(2, "0")).join("");
+      const asAscii = String.fromCharCode(...buf);
+      // JPEG: FFD8FF · PNG: 89504E47 · GIF: GIF8 · WebP: RIFF....WEBP
+      if (hex.startsWith("ffd8ff")) return true;
+      if (hex.startsWith("89504e470d0a1a0a")) return true;
+      if (asAscii.startsWith("GIF8")) return true;
+      if (asAscii.startsWith("RIFF") && asAscii.slice(8, 12) === "WEBP") return true;
+      return false;
+    };
+
+    let filesValid = true; // cached result; the browser already enforces required text fields
+
+    const validateFiles = async () => {
+      const files = input?.files ? Array.from(input.files) : [];
+      if (files.length === 0) { clearError(); return true; }
+      if (files.length > MAX_FILES) {
+        showError(`Please attach no more than ${MAX_FILES} photos.`);
+        return false;
+      }
+      for (const file of files) {
+        if (file.size > MAX_BYTES) {
+          showError(`"${file.name}" is larger than 10 MB. Please attach a smaller photo.`);
+          return false;
+        }
+        if (!(await isRealImage(file))) {
+          showError(`"${file.name}" is not a valid image (only JPG, PNG, WebP, or GIF are allowed).`);
+          return false;
+        }
+      }
+      clearError();
+      return true;
+    };
+
+    // Validate as soon as files are chosen and cache the result.
+    input?.addEventListener("change", async () => {
+      filesValid = false; // pessimistic until confirmed
+      filesValid = await validateFiles();
+    });
+
+    // On submit, required text fields are already validated by the browser.
+    // If the photos aren't confirmed-valid, stop, re-check, then submit only if they pass.
+    form?.addEventListener("submit", (e) => {
+      if (filesValid) return; // photos already verified (or none attached)
+      e.preventDefault();
+      validateFiles().then((ok) => {
+        filesValid = ok;
+        if (ok) form.submit();
+        else input?.focus();
+      });
+    });
+  </script>
 </Layout>

@@ -8,7 +8,7 @@ export const languages = [
 
 export const translations = {
   en: {
-    nav_home: "Home", nav_services: "Services", nav_cars: "Cars", nav_about: "About", nav_contact: "Contact",
+    nav_home: "Home", nav_services: "Services", nav_body: "Body Shop", nav_cars: "Cars", nav_about: "About", nav_contact: "Contact",
     cta_call: "Call / Book",
     hero_eyebrow: "Family-owned in Austin since 2007",
     hero_title: "Trusted Auto Repair & Quality Used Cars in Austin",
@@ -28,7 +28,7 @@ export const translations = {
     btn_view_more: "See All Cars",
   },
   es: {
-    nav_home: "Inicio", nav_services: "Servicios", nav_cars: "Autos", nav_about: "Acerca", nav_contact: "Contacto",
+    nav_home: "Inicio", nav_services: "Servicios", nav_body: "Taller de Carrocería", nav_cars: "Autos", nav_about: "Acerca", nav_contact: "Contacto",
     cta_call: "Llamar / Reservar",
     hero_eyebrow: "Negocio familiar en Austin desde 2007",
     hero_title: "Reparación Confiable y Autos Usados de Calidad en Austin",
@@ -48,7 +48,7 @@ export const translations = {
     btn_view_more: "Ver Todos los Autos",
   },
   am: {
-    nav_home: "መነሻ", nav_services: "አገልግሎቶች", nav_cars: "መኪናዎች", nav_about: "ስለ እኛ", nav_contact: "አግኙን",
+    nav_home: "መነሻ", nav_services: "አገልግሎቶች", nav_body: "የሰውነት ጥገና", nav_cars: "መኪናዎች", nav_about: "ስለ እኛ", nav_contact: "አግኙን",
     cta_call: "ይደውሉ / ቀጠሮ",
     hero_eyebrow: "በአስቲን ከ2007 ጀምሮ የቤተሰብ ንግድ",
     hero_title: "በአስቲን የሚታመን የመኪና ጥገና እና ጥራት ያለው ተጠቃሚ መኪና",

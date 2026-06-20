@@ -6,10 +6,35 @@ import { cars } from "../data/cars.js";
 import { site } from "../data/site.js";
 
 const hasCars = cars.length > 0;
+
+// Vehicle structured data so each car can appear in Google rich/Shopping results.
+const schema = hasCars
+  ? cars.map((car) => ({
+      "@context": "https://schema.org",
+      "@type": "Car",
+      name: car.title,
+      brand: car.make,
+      vehicleModelDate: car.year,
+      mileageFromOdometer: { "@type": "QuantitativeValue", value: parseInt(String(car.mileage).replace(/[^0-9]/g, ""), 10), unitCode: "SMI" },
+      image: new URL(car.img, Astro.site).href,
+      description: car.desc,
+      offers: {
+        "@type": "Offer",
+        price: car.price,
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        seller: { "@type": "AutoDealer", name: site.name },
+      },
+    }))
+  : [];
 ---
 
-<Layout title="Inventory" description="Quality, inspected used cars at Princess Auto Austin. Call for current availability.">
-  <PageHero title="Inventory" subtitle="Every car we sell is inspected and reconditioned before it leaves our lot." />
+<Layout
+  title="Used Cars for Sale in Austin"
+  description="Browse quality, inspected used cars for sale at Princess Auto Austin on North Lamar Blvd. Reconditioned, clean-title vehicles at fair prices. Call for today's availability."
+  schema={schema}
+>
+  <PageHero title="Used Cars for Sale in Austin" subtitle="Every car we sell is inspected and reconditioned before it leaves our lot." />
 
   <section class="section">
     <div class="container-app">

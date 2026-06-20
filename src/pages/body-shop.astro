@@ -1,0 +1,179 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHero from "../components/PageHero.astro";
+import { site } from "../data/site.js";
+
+// Each item targets a real search phrase people use when a panel is damaged.
+const repairs = [
+  { title: "Bumper Replacement", desc: "Cracked or crushed front and rear bumpers replaced and refinished to match your paint.", icon: "shield" },
+  { title: "Fender Replacement", desc: "Dented or rusted fenders swapped for properly fitted, repainted panels.", icon: "panel" },
+  { title: "Door & Panel Replacement", desc: "Damaged doors, quarter panels, and side panels replaced after collisions.", icon: "door" },
+  { title: "Hood & Trunk Replacement", desc: "Bent hoods and trunk lids replaced and aligned for a factory-clean fit.", icon: "hood" },
+  { title: "Dent & Hail Repair", desc: "Paintless dent removal and full hail damage repair — fast turnaround after Texas storms.", icon: "cloud" },
+  { title: "Collision Repair", desc: "From minor fender-benders to major impact damage, restored to pre-accident condition.", icon: "sparkles" },
+  { title: "Bumper & Grille Trim", desc: "Grilles, trim, mirrors, and light housings replaced with the right part for your make.", icon: "grid" },
+  { title: "Paint & Color Match", desc: "Computer color-matched paint and clear-coat blending so repairs disappear.", icon: "drop" },
+];
+
+const steps = [
+  { n: "1", title: "Free Estimate", desc: "Bring the car in or send photos. We assess the damage and quote the parts and labor — no surprises." },
+  { n: "2", title: "We Source the Part", desc: "We order the correct OEM or quality aftermarket panel for your exact make, model, and year." },
+  { n: "3", title: "Replace & Refinish", desc: "Our technicians fit, align, and paint the new part so it blends seamlessly with your vehicle." },
+  { n: "4", title: "Inspect & Hand Back", desc: "We check panel gaps, paint match, and finish, then return your car looking like the damage never happened." },
+];
+
+const faqs = [
+  {
+    q: "Do you replace car body parts like bumpers and fenders?",
+    a: "Yes. We replace bumpers, fenders, doors, hoods, quarter panels, grilles, mirrors, and trim. We source the correct OEM or quality aftermarket part for your make, model, and year, then fit and refinish it to match your vehicle.",
+  },
+  {
+    q: "Do I need to buy the body part myself?",
+    a: "No — we handle sourcing for you. We order the right part, install it, and paint or color-match it as part of the job, so you get one quote covering parts, labor, and finish.",
+  },
+  {
+    q: "How much does body part replacement cost in Austin?",
+    a: `It depends on the part, your vehicle, and the paint work involved. We give free, no-obligation estimates — call us at ${site.phonePrimary} or stop by our shop on North Lamar Blvd for an exact quote.`,
+  },
+  {
+    q: "Can you repair hail and storm damage?",
+    a: "Yes. We offer paintless dent repair for hail damage and full panel replacement when dents are too deep to pull. We can also assist with the insurance estimate.",
+  },
+  {
+    q: "Do you work with insurance claims?",
+    a: "We can provide a detailed written estimate for your insurance company and coordinate the repair once your claim is approved.",
+  },
+];
+
+// JSON-LD: a Service offering + an FAQPage so Google can show rich results.
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Auto Body Repair & Body Part Replacement",
+    serviceType: "Collision repair and car body part replacement",
+    description:
+      "Collision repair, bumper and fender replacement, dent and hail repair, and paint color-matching in Austin, TX. We source and install the right body parts for your vehicle.",
+    areaServed: { "@type": "City", name: "Austin" },
+    provider: { "@type": "AutoRepair", name: site.name, telephone: site.phonePrimary },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  },
+];
+
+const icons = {
+  shield: "M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.249-8.25-3.285z",
+  panel: "M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5",
+  door: "M6 3.75A2.25 2.25 0 003.75 6v12a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0015.75 18V6A2.25 2.25 0 0013.5 3.75H6zM12 13.5h.008v.008H12V13.5z",
+  hood: "M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75",
+  cloud: "M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z",
+  sparkles: "M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z",
+  grid: "M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z",
+  drop: "M12 21a8.25 8.25 0 005.834-14.084.75.75 0 00-1.06 0L12 11.69 7.226 6.916a.75.75 0 00-1.06 0A8.25 8.25 0 0012 21z",
+};
+---
+
+<Layout
+  title="Auto Body Shop & Body Part Replacement in Austin"
+  description="Collision repair, bumper & fender replacement, dent and hail repair, and paint color-matching in Austin, TX. We source and install the right body part for your car. Free estimates."
+  schema={schema}
+>
+  <PageHero
+    title="Auto Body Repair & Part Replacement"
+    subtitle="Bumpers, fenders, doors, panels, and collision damage — we source the right part and refinish it to match. Serving Austin since 2007."
+  />
+
+  <!-- Intro -->
+  <section class="section">
+    <div class="container-app max-w-3xl text-center" data-reveal>
+      <span class="eyebrow">Austin Body Shop</span>
+      <h2 class="mt-4 text-3xl font-bold text-ink-900 sm:text-4xl">Damaged panel? We'll make it like new.</h2>
+      <p class="mt-4 text-lg text-ink-500">
+        Whether it's a cracked bumper, a dented fender, hail damage, or full collision repair, Princess Auto Austin
+        replaces and refinishes car body parts the right way. You don't need to find the part yourself — we source the
+        correct panel for your make and model, install it, and color-match the paint so the repair disappears.
+      </p>
+    </div>
+  </section>
+
+  <!-- Repairs grid -->
+  <section class="section pt-0">
+    <div class="container-app">
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {repairs.map((r, i) => (
+          <div class="card card-hover card-accent" data-reveal style={`--reveal-delay:${(i % 4) * 80}ms`}>
+            <span class="icon-tile">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d={icons[r.icon]} /></svg>
+            </span>
+            <h3 class="mt-4 text-lg font-semibold text-ink-900">{r.title}</h3>
+            <p class="mt-2 text-sm text-ink-500">{r.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section bg-ink-50">
+    <div class="container-app">
+      <div class="max-w-2xl" data-reveal>
+        <span class="eyebrow">How It Works</span>
+        <h2 class="mt-4 text-3xl font-bold text-ink-900 sm:text-4xl">From damage to done in four steps</h2>
+      </div>
+      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {steps.map((s, i) => (
+          <div class="card" data-reveal style={`--reveal-delay:${(i % 4) * 80}ms`}>
+            <span class="flex h-10 w-10 items-center justify-center rounded-full bg-brand-600 text-base font-bold text-white">{s.n}</span>
+            <h3 class="mt-4 text-lg font-semibold text-ink-900">{s.title}</h3>
+            <p class="mt-2 text-sm text-ink-500">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container-app max-w-3xl">
+      <div class="text-center" data-reveal>
+        <span class="eyebrow">FAQ</span>
+        <h2 class="mt-4 text-3xl font-bold text-ink-900 sm:text-4xl">Body part replacement questions</h2>
+      </div>
+      <div class="mt-10 space-y-3">
+        {faqs.map((f, i) => (
+          <details class="card group" data-reveal style={`--reveal-delay:${(i % 3) * 70}ms`}>
+            <summary class="flex cursor-pointer items-center justify-between gap-4 text-base font-semibold text-ink-900 marker:content-['']">
+              {f.q}
+              <svg class="h-5 w-5 shrink-0 text-brand-600 transition-transform group-open:rotate-45" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+            </summary>
+            <p class="mt-3 text-sm text-ink-500">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section pt-0">
+    <div class="container-app">
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-ink-900 to-brand-900 px-8 py-14 text-center text-white" data-reveal>
+        <div class="blob h-56 w-56 bg-brand-500" style="bottom:-3rem;left:-2rem;opacity:0.4"></div>
+        <div class="relative">
+          <h2 class="text-2xl font-bold sm:text-3xl">Get a free body repair estimate</h2>
+          <p class="mt-2 text-ink-200">Send us photos of the damage or stop by the shop — we'll quote the part and the work.</p>
+          <div class="mt-6 flex flex-wrap justify-center gap-3">
+            <a href={site.phoneHref} class="btn bg-white text-brand-700 hover:bg-brand-50">Call {site.phonePrimary}</a>
+            <a href="/contact" class="btn-outline !border-white/30 !bg-white/5 !text-white hover:!border-white">Send Photos</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

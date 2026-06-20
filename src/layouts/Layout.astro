@@ -2,14 +2,59 @@
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { site } from "../data/site.js";
+import { site, mapsUrl } from "../data/site.js";
 
 const {
   title = site.name,
   description = "Princess Auto Austin — trusted auto repair & quality used cars in Austin. Honest pricing, skilled technicians, family-owned service.",
+  image = "/assets/logo.png",
+  // Pages can pass extra JSON-LD objects (Service, FAQPage, Vehicle, etc.)
+  schema = [],
 } = Astro.props;
+const pageSchemas = Array.isArray(schema) ? schema : [schema];
 
 const fullTitle = title === site.name ? `${site.name} — Auto Repair & Used Cars in Austin` : `${title} — ${site.name}`;
+
+// Build absolute URLs from the configured `site` so canonical/OG tags are correct.
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
+const socialImage = new URL(image, Astro.site).href;
+
+// Structured data for local SEO: helps Google show hours, address, phone,
+// and rich results for the business. Combines AutoRepair + used-car dealer.
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": ["AutoRepair", "AutomotiveBusiness"],
+  "@id": `${Astro.site}#business`,
+  name: site.name,
+  description: site.description,
+  url: Astro.site?.href,
+  telephone: site.phonePrimary,
+  email: site.email,
+  image: socialImage,
+  logo: new URL("/assets/logo.png", Astro.site).href,
+  priceRange: "$$",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: site.addressParts.street,
+    addressLocality: site.addressParts.city,
+    addressRegion: site.addressParts.region,
+    postalCode: site.addressParts.postalCode,
+    addressCountry: site.addressParts.country,
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: site.geo.latitude,
+    longitude: site.geo.longitude,
+  },
+  openingHoursSpecification: site.openingHours.map((h) => ({
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: h.days,
+    opens: h.opens,
+    closes: h.closes,
+  })),
+  areaServed: { "@type": "City", name: "Austin" },
+  sameAs: [mapsUrl],
+};
 ---
 
 <!doctype html>
@@ -18,12 +63,40 @@ const fullTitle = title === site.name ? `${site.name} — Auto Repair & Used Car
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/png" href="/assets/logo.png" />
+    <meta name="theme-color" content="#0f172a" />
+
+    <!-- Primary SEO -->
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content="auto repair Austin, used cars Austin, car maintenance, oil change, brake repair, body shop, hail damage, North Lamar mechanic" />
+    <meta name="author" content={site.name} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="geo.region" content="US-TX" />
+    <meta name="geo.placename" content="Austin" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph (Facebook, LinkedIn, etc.) -->
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Structured data: LocalBusiness / AutoRepair for rich local results -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    {pageSchemas.map((s) => (
+      <script type="application/ld+json" set:html={JSON.stringify(s)} />
+    ))}
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

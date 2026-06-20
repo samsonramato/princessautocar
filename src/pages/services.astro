@@ -24,10 +24,59 @@ const icons = {
   chip: "M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z",
   snow: "M12 3v18m9-9H3m15.364-6.364L5.636 18.364m12.728 0L5.636 5.636",
 };
+
+const faqs = [
+  {
+    q: "Do I need an appointment for car maintenance?",
+    a: `Walk-ins are welcome for quick jobs like oil changes, but calling ahead at ${site.phonePrimary} helps us get you in and out faster, especially for bigger repairs.`,
+  },
+  {
+    q: "How much does an oil change cost?",
+    a: "Pricing depends on your vehicle and oil type (conventional, synthetic blend, or full synthetic). Call us for a quick quote — we keep our maintenance prices fair and transparent.",
+  },
+  {
+    q: "My check engine light is on — can you help?",
+    a: "Yes. We run full computer diagnostics to read the trouble codes, pinpoint the real cause, and explain your options before doing any work.",
+  },
+  {
+    q: "What kinds of repairs do you handle?",
+    a: "Engine, transmission, brakes, suspension, electrical, AC and heating, diagnostics, scheduled maintenance, plus full body shop and collision work. If it's on your car, we can usually fix it.",
+  },
+  {
+    q: "Do you offer a warranty on repairs?",
+    a: "Yes — we stand behind our work with a service guarantee. Ask us about the warranty on your specific repair when you get your quote.",
+  },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Auto Repair & Maintenance",
+    serviceType: "Car repair, maintenance, diagnostics, and used car sales",
+    description:
+      "Full-service auto repair and maintenance in Austin, TX: oil changes, brakes, suspension, diagnostics, AC and heating, engine and transmission work.",
+    areaServed: { "@type": "City", name: "Austin" },
+    provider: { "@type": "AutoRepair", name: site.name, telephone: site.phonePrimary },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  },
+];
 ---
 
-<Layout title="Services" description="Full service auto repair, diagnostics, maintenance, body shop and used car sales in Austin, TX.">
-  <PageHero title="Our Services" subtitle="Full-service auto repair, diagnostics, maintenance, and quality used cars — all under one roof." />
+<Layout
+  title="Auto Repair & Car Maintenance in Austin"
+  description="Full-service auto repair and maintenance in Austin, TX — oil changes, brakes, suspension, engine & transmission, diagnostics, AC, body shop, and used car sales. Honest, fair pricing."
+  schema={schema}
+>
+  <PageHero title="Auto Repair & Maintenance Services" subtitle="Full-service auto repair, diagnostics, maintenance, and quality used cars — all under one roof." />
 
   <section class="section">
     <div class="container-app">
@@ -41,6 +90,25 @@ const icons = {
             <p class="mt-2 text-sm text-ink-500">{s.desc}</p>
           </div>
         ))}
+      </div>
+
+      <!-- FAQ -->
+      <div class="mx-auto mt-16 max-w-3xl">
+        <div class="text-center" data-reveal>
+          <span class="eyebrow">FAQ</span>
+          <h2 class="mt-4 text-3xl font-bold text-ink-900 sm:text-4xl">Common questions</h2>
+        </div>
+        <div class="mt-8 space-y-3">
+          {faqs.map((f, i) => (
+            <details class="card group" data-reveal style={`--reveal-delay:${(i % 3) * 70}ms`}>
+              <summary class="flex cursor-pointer items-center justify-between gap-4 text-base font-semibold text-ink-900 marker:content-['']">
+                {f.q}
+                <svg class="h-5 w-5 shrink-0 text-brand-600 transition-transform group-open:rotate-45" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+              </summary>
+              <p class="mt-3 text-sm text-ink-500">{f.a}</p>
+            </details>
+          ))}
+        </div>
       </div>
 
       <div class="relative mt-16 overflow-hidden rounded-3xl bg-gradient-to-br from-ink-900 to-brand-900 px-8 py-14 text-center text-white" data-reveal>

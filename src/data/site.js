@@ -2,7 +2,19 @@
 export const site = {
   name: "Princess Auto Austin",
   tagline: "Car Sales & Maintenance",
+  description:
+    "Family-owned auto repair shop and used-car dealer in Austin, TX. Honest pricing, skilled technicians, and quality inspected vehicles since 2007.",
   address: "11114 N Lamar Blvd, Ste C, Austin, TX 78753",
+  // Broken-out address parts for structured data (schema.org PostalAddress)
+  addressParts: {
+    street: "11114 N Lamar Blvd, Ste C",
+    city: "Austin",
+    region: "TX",
+    postalCode: "78753",
+    country: "US",
+  },
+  // Geo coordinates (used for LocalBusiness schema + map)
+  geo: { latitude: 30.3810949, longitude: -97.6899031 },
   phonePrimary: "(512) 926-7900",
   phoneHiring: "(512) 293-9293",
   phoneHref: "tel:+15129267900",
@@ -11,6 +23,11 @@ export const site = {
     { day: "Mon–Fri", time: "8:30 AM – 5:30 PM" },
     { day: "Saturday", time: "9:00 AM – 3:00 PM" },
     { day: "Sunday", time: "Closed" },
+  ],
+  // Machine-readable hours for schema.org openingHoursSpecification (24h, ISO day names)
+  openingHours: [
+    { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "08:30", closes: "17:30" },
+    { days: ["Saturday"], opens: "09:00", closes: "15:00" },
   ],
   // Google Place ID (used for the "Leave a Review" link)
   googlePlaceId: "ChIJiQOyxa3JRIYRDTP37pEv34A",
