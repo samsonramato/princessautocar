@@ -187,6 +187,12 @@ const structuredData = {
         if (reduce || !("IntersectionObserver" in window)) {
           counters.forEach(runCount);
         } else {
+          // The HTML ships the REAL number (good for crawlers / no-JS).
+          // For animation, reset to 0 only now that JS is running, so the
+          // count-up starts from zero without ever showing 0 to a crawler.
+          counters.forEach((el) => {
+            el.textContent = "0" + (el.dataset.suffix || "");
+          });
           const co = new IntersectionObserver(
             (entries) => {
               entries.forEach((entry) => {

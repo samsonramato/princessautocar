@@ -143,7 +143,7 @@ const starPath = "M11.48 3.5a.56.56 0 011.04 0l2.13 5.11a.56.56 0 00.47.35l5.52.
               <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d={icons[s.icon]} /></svg>
             </span>
             <p class="mt-4 font-display text-4xl font-bold sm:text-5xl">
-              <span data-count={s.count} data-suffix={s.suffix}>0{s.suffix}</span>
+              <span data-count={s.count} data-suffix={s.suffix}>{s.count.toLocaleString("en-US")}{s.suffix}</span>
             </p>
             <p class="mt-1 text-sm text-brand-100">{s.label}</p>
           </div>
