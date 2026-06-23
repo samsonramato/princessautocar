@@ -1,7 +1,7 @@
 // Central business info — edit these in one place.
 export const site = {
-  name: "Princess Auto Austin",
-  tagline: "Car Sales & Maintenance",
+  name: "Princess Auto",
+  tagline: "Car Sales & Maintenance · Austin, TX",
   description:
     "Family-owned auto repair shop and used-car dealer in Austin, TX. Honest pricing, skilled technicians, and quality inspected vehicles since 2007.",
   address: "11114 N Lamar Blvd, Ste C, Austin, TX 78753",
@@ -15,9 +15,9 @@ export const site = {
   },
   // Geo coordinates (used for LocalBusiness schema + map)
   geo: { latitude: 30.3810949, longitude: -97.6899031 },
-  phonePrimary: "(512) 926-7900",
-  phoneHiring: "(512) 293-9293",
-  phoneHref: "tel:+15129267900",
+  phonePrimary: "(512) 293-9293",
+  phoneHiring: "(512) 926-7900",
+  phoneHref: "tel:+15122939293",
   email: "princessautocar@gmail.com",
   hours: [
     { day: "Mon–Fri", time: "8:30 AM – 5:30 PM" },

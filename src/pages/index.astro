@@ -7,6 +7,13 @@ import { site, reviewUrl } from "../data/site.js";
 
 const featured = cars.filter((c) => c.featured).slice(0, 3);
 
+// Build the hero "Open:" line from the single source of truth (site.hours)
+// so it can never contradict the footer. Skips closed days.
+const heroHours = site.hours
+  .filter((h) => !/closed/i.test(h.time))
+  .map((h) => `${h.day} ${h.time}`)
+  .join(" · ");
+
 // Hero background slideshow — cycles every real photo with a CSS crossfade.
 const slides = [
   ...Array.from({ length: 3 }, (_, i) => `/assets/slide${i + 1}.jpg`),
@@ -89,7 +96,7 @@ const starPath = "M11.48 3.5a.56.56 0 011.04 0l2.13 5.11a.56.56 0 00.47.35l5.52.
         </div>
         <dl class="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm text-ink-200">
           <div><dt class="inline font-semibold text-white">Address:</dt> <dd class="inline">{site.address}</dd></div>
-          <div><dt class="inline font-semibold text-white">Open:</dt> <dd class="inline">Mon–Sat 9:00–6:00</dd></div>
+          <div><dt class="inline font-semibold text-white">Open:</dt> <dd class="inline">{heroHours}</dd></div>
         </dl>
       </div>
 
@@ -149,7 +156,7 @@ const starPath = "M11.48 3.5a.56.56 0 011.04 0l2.13 5.11a.56.56 0 00.47.35l5.52.
   <section class="section bg-dots" style="background-color:var(--color-surface)">
     <div class="container-app">
       <div data-reveal>
-        <SectionHeading title="Why Choose Princess Auto Austin" titleKey="why_title"
+        <SectionHeading title="Why Choose Princess Auto" titleKey="why_title"
           subtitle="We pride ourselves on exceptional service and real value for every customer." subtitleKey="why_sub" />
       </div>
       <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
