@@ -52,7 +52,14 @@ const structuredData = {
     opens: h.opens,
     closes: h.closes,
   })),
-  areaServed: { "@type": "City", name: "Austin" },
+  areaServed: [
+    { "@type": "City", name: "Austin" },
+    { "@type": "Place", name: "North Austin" },
+    { "@type": "Place", name: "North Lamar" },
+    { "@type": "Place", name: "Wells Branch" },
+    { "@type": "Place", name: "Pflugerville" },
+    { "@type": "Place", name: "78753" },
+  ],
   sameAs: [mapsUrl],
 };
 ---
@@ -68,7 +75,7 @@ const structuredData = {
     <!-- Primary SEO -->
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <meta name="keywords" content="auto repair Austin, used cars Austin, car maintenance, oil change, brake repair, body shop, hail damage, North Lamar mechanic" />
+    <meta name="keywords" content="Princess Auto Austin, auto repair Austin, auto repair North Lamar, mechanic Austin 78753, used cars Austin, used car dealer North Austin, car maintenance Austin, oil change Austin, brake repair Austin, body shop Austin TX, collision repair Austin, bumper replacement Austin, hail damage repair Austin, 78753 auto shop, Wells Branch mechanic" />
     <meta name="author" content={site.name} />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="geo.region" content="US-TX" />

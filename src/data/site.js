@@ -1,6 +1,6 @@
 // Central business info — edit these in one place.
 export const site = {
-  name: "Princess Auto",
+  name: "Princess Auto Austin",
   tagline: "Car Sales & Maintenance · Austin, TX",
   description:
     "Family-owned auto repair shop and used-car dealer in Austin, TX. Honest pricing, skilled technicians, and quality inspected vehicles since 2007.",
